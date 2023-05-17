@@ -5,7 +5,23 @@ isoCode = "en"
 weight = 1
 rtl = false
 
-title = "Blowfish"
+
+
+title = "Sean Liu"
+
+[author]
+name = "Sean Liu"
+image = "img/author.jpg"
+headline = "Curioser and curioser!"
+bio = "I'm Sean Liu, a student at UIUC pursuing a dual degree in Computer Science & Linguistics. I love algorithms, mathematics, and language!"
+links = [
+  { email = "mailto:zhxnliu@gmail.com" },
+  { github = "https://github.com/xSeanliux" },
+  { linkedin = "https://linkedin.com/in/zhxnliu" }
+]
+
+
+# title = "Sean Liu"
 # logo = "img/logo.png"
 # secondaryLogo = "img/secondary-logo.png"
 # description = "My awesome website"
@@ -14,11 +30,11 @@ title = "Blowfish"
 dateFormat = "2 January 2006"
 
 # [author]
-#   name = "Your name here"
+#   name = "Sean Liu"
 #   image = "img/blowfish_logo.png"
 #   headline = "I'm only human"
-#   bio = "A little bit about you"
-#   links = [
+# bio = "I'm Sean Liu, a student at UIUC pursuing a dual degree in Computer Science & Linguistics. I love algorithms, mathematics, and language!"
+# links = [
 #     { email = "mailto:hello@your_domain.com" },
 #     { link = "https://link-to-some-website.com/" },
 #     { amazon = "https://www.amazon.com/hz/wishlist/ls/wishlist-id" },
