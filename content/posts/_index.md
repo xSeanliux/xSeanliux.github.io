@@ -11,4 +11,4 @@ showEdit: false
 layoutBackgroundHeaderSpace: false
 ---
 
-{{< lead >}} If you like what I write, please consider reading it {{< /lead >}}
+{{< lead >}} If you like what I write, please consider reading more {{< /lead >}}
