@@ -10,7 +10,7 @@ defaultContentLanguage = "en"
 
 enableRobotsTXT = true
 paginate = 10
-summaryLength = 0
+summaryLength = 10
 
 buildDrafts = false
 buildFuture = false
@@ -33,6 +33,9 @@ buildFuture = false
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
+
+[article]
+  showTableOfContents = true
 
 [related]
   threshold = 0

@@ -21,6 +21,11 @@
   weight = 10
 
 [[main]]
+  name = "résumé"
+  pageRef = "https://zhxnliu.me/about/cv_zhxnliu.pdf"
+  weight = 25
+
+[[main]]
   identifier = "github"
   pre = "github"
   url = "https://github.com/xSeanliux"
