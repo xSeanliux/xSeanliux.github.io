@@ -13,7 +13,7 @@ logo = "img/logo.png"
 [author]
 name = "sean liu"
 image = "img/author.png"
-headline = "Curioser and curioser!"
+headline = "curioser and curioser!"
 bio = "A Computer Science & Linguistics student at UIUC. I love algorithms, mathematics, and language!"
 links = [
   { codeforces = "https://codeforces.com/profile/Seanliu" },
