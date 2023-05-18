@@ -22,7 +22,7 @@
 
 [[main]]
   name = "résumé"
-  url = "about/cv_zhxnliu.pdf"
+  url = "https://zhxnliu.me/cv_zhxnliu.pdf"
   weight = 25
 
 [[main]]

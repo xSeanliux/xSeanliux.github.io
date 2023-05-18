@@ -17,10 +17,10 @@ enableCodeCopy = false
 
 disableImageOptimization = false
 
- defaultBackgroundImage = "img/cafe.jpg" # used as default for background images 
+defaultBackgroundImage = "img/cafe.jpg" # used as default for background images 
 # defaultFeaturedImage = "IMAGE.jpg" # used as default for featured images in all articles
 
-# highlightCurrentMenuArea = true
+highlightCurrentMenuArea = true
 smartTOC = true
 smartTOCHideUnfocusedChildren = true
 
@@ -52,7 +52,7 @@ smartTOCHideUnfocusedChildren = true
   showDateUpdated = false
   showAuthor = true
   showHero = false
-  # heroStyle = "basic" # valid options: basic, big, background, thumbAndBackground
+  heroStyle = "background" # valid options: basic, big, background, thumbAndBackground
   layoutBackgroundBlur = true # only used when heroStyle equals background or thumbAndBackground
   layoutBackgroundHeaderSpace = true # only used when heroStyle equals background
   showBreadcrumbs = false
