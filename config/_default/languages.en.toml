@@ -18,7 +18,8 @@ bio = "I'm Sean Liu, a student at UIUC pursuing a dual degree in Computer Scienc
 links = [
   { email = "mailto:zhxnliu@gmail.com" },
   { github = "https://github.com/xSeanliux" },
-  { linkedin = "https://linkedin.com/in/zhxnliu" }
+  { linkedin = "https://linkedin.com/in/zhxnliu" },
+  { codeforces = "https://codeforces.com/profile/Seanliu" }
 ]
 
 
