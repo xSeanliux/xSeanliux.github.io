@@ -7,11 +7,12 @@ rtl = false
 
 
 
-title = "Sean Liu"
+title = "sean liu"
+logo = "img/logo.png"
 
 [author]
 name = "Sean Liu"
-image = "img/author.jpg"
+image = "img/author.png"
 headline = "Curioser and curioser!"
 bio = "I'm Sean Liu, a student at UIUC pursuing a dual degree in Computer Science & Linguistics. I love algorithms, mathematics, and language!"
 links = [
@@ -22,7 +23,7 @@ links = [
 
 
 # title = "Sean Liu"
-# logo = "img/logo.png"
+# logo = "img/.png"
 # secondaryLogo = "img/secondary-logo.png"
 # description = "My awesome website"
 # copyright = "Copy, _right?_ :thinking_face:"

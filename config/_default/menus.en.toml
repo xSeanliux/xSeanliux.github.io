@@ -11,15 +11,32 @@
 # ordered by weight from lowest to highest.
 
 [[main]]
+  name = "about"
+  pageRef = "about"
+  weight = 20
+
+[[main]]
   name = "blog"
   pageRef = "posts"
   weight = 10
 
 [[main]]
-  name = "about"
-  pageRef = "about"
-  weight = 20
+  identifier = "github"
+  pre = "github"
+  url = "https://github.com/xSeanliux"
+  weight = 30
 
+[[main]]
+  identifier = "linkedin"
+  pre = "linkedin"
+  url = "https://linkedin.com/in/zhxnliu"
+  weight = 31
+
+[[main]]
+  identifier = "mail"
+  pre = "email"
+  url = "mailto:zhxnliu@gmail.com"
+  weight = 32
 #[[main]]
 #  name = "example sub-menu 1"
 #  parent = "Parent"
@@ -59,10 +76,10 @@
 # the copyright notice. Configure as per the main menu above.
 
 
-# [[footer]]
-#   name = "Tags"
-#   pageRef = "tags"
-#   weight = 10
+ [[footer]]
+   name = "Tags"
+   pageRef = "tags"
+   weight = 10
 
 # [[footer]]
 #   name = "Categories"
