@@ -9,7 +9,7 @@ showAuthor: true
 showReadingTime: false
 showEdit: false
 layoutBackgroundHeaderSpace: false
-
+showTableOfContents: false
 paginate: 0
 ---
 
