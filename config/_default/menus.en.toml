@@ -35,19 +35,19 @@
   identifier = "linkedin"
   pre = "linkedin"
   url = "https://linkedin.com/in/zhxnliu"
-  weight = 31
+  weight = 30
 
 [[main]]
   identifier = "cf"
   pre = "codeforces"
   url = "https://codeforces.com/profile/Seanliu"
-  weight = 32
+  weight = 30
 
 [[main]]
   identifier = "mail"
   pre = "email"
   url = "mailto:zhxnliu@gmail.com"
-  weight = 32
+  weight = 30
 #[[main]]
 #  name = "example sub-menu 1"
 #  parent = "Parent"

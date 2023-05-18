@@ -16,10 +16,10 @@ image = "img/author.png"
 headline = "Curioser and curioser!"
 bio = "I'm Sean Liu, a student at UIUC pursuing a dual degree in Computer Science & Linguistics. I love algorithms, mathematics, and language!"
 links = [
-  { email = "mailto:zhxnliu@gmail.com" },
+  { codeforces = "https://codeforces.com/profile/Seanliu" },
   { github = "https://github.com/xSeanliux" },
   { linkedin = "https://linkedin.com/in/zhxnliu" },
-  { codeforces = "https://codeforces.com/profile/Seanliu" }
+  { email = "mailto:zhxnliu@gmail.com" }
 ]
 
 
