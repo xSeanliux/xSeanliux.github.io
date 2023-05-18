@@ -17,7 +17,7 @@ enableCodeCopy = false
 
 disableImageOptimization = false
 
-defaultBackgroundImage = "img/arboretum.jpg" # used as default for background images 
+defaultBackgroundImage = "img/arboretum.JPG" # used as default for background images 
 # defaultFeaturedImage = "IMAGE.jpg" # used as default for featured images in all articles
 
 highlightCurrentMenuArea = true

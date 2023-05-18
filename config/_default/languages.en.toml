@@ -22,6 +22,10 @@ links = [
   { email = "mailto:zhxnliu@gmail.com" }
 ]
 
+dateFormat = "2 January 2006"
+
+
+
 
 # title = "Sean Liu"
 # logo = "img/.png"
@@ -29,7 +33,7 @@ links = [
 # description = "My awesome website"
 # copyright = "Copy, _right?_ :thinking_face:"
 
-dateFormat = "2 January 2006"
+
 
 # [author]
 #   name = "Sean Liu"
