@@ -34,9 +34,6 @@ buildFuture = false
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
-[article]
-  showTableOfContents = true
-
 [related]
   threshold = 0
   toLower = false

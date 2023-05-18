@@ -7,11 +7,11 @@ rtl = false
 
 
 
-title = "sean liu"
+title = "sean liu."
 logo = "img/logo.png"
 
 [author]
-name = "Sean Liu"
+name = "sean liu"
 image = "img/author.png"
 headline = "Curioser and curioser!"
 bio = "I'm Sean Liu, a student at UIUC pursuing a dual degree in Computer Science & Linguistics. I love algorithms, mathematics, and language!"
