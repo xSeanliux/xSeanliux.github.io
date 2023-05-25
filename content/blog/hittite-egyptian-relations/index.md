@@ -19,6 +19,10 @@ Far from being independent states insulated from each other, the Mediterranean, 
 
 ## Historical Background
 
+![A map showing Hittite and Egyptian territories at the time of the Battle of Kadesh](hittite_egypt_map.png)
+<small>
+A map showing Hittite and Egyptian territories at the time of the Battle of Kadesh. Source: Wikipedia. By Crates, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=3546044
+</small>
 ### The Late Bronze Age
 
 As the dust of war settled in the Near East during the Late Bronze Age, structure had slowly risen out of the repeated conflicts: now, four empires dominated the area, addressing each other as brothers. To the south, the Egyptians reigned, the senior of this ”Royal Club” along with the Assyrians and Babylonians in Mesopotamia and the Hittites in Anatolia. They recognised that in order to keep their rule and influence, it was not only advantageous but necessary to form pacts and alliances with the other powers in the region. A selection of treaties and court correspondences between the Hittite empire and other political entities can be found in [2]. This treaty was notable in that it was not between an Empire and a vassal city-state, but between two *equal* Great Kings.
@@ -50,7 +54,7 @@ However, the current texts we have seem to be copies of an oﬀicial ”silver t
 
 ![The treaty of Kadesh written in clay. Source: Wikipedia](clay_tablet.jpg)
 <small>
-The treaty of Kadesh written in clay. Source: Wikipedia
+The treaty of Kadesh written in clay. By Osama Shukir Muhammed Amin FRCP(Glasg) - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=92827340
 </small>
 			
 #### Treaty clauses
