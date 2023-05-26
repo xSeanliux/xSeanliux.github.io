@@ -32,6 +32,7 @@ Instructions: type your Hittite transliteration below, separated by dashes and w
     overflow: auto;
   background-color: white;
   padding: 20px;
+  margin-top: 5px;
   margin-bottom: 5px;
   width: 100%;
   /* display: inline-grid; */

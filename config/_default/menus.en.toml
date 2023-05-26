@@ -58,7 +58,7 @@
 [[main]]
   name = "*Gulsmi*"
   parent = "other"
-  pageRef = "other/hittite_typesetting"
+  pageRef = "other/gulsmi"
   weight = 10
 
 #[[main]]
