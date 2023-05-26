@@ -1,11 +1,8 @@
 ---
-title: "about"
-description: "all about me!"
+title: "*Gulsmi* - Hittite Typesetting! "
 
-draft: true
+draft: false
 ---
-
-# *Gulsmi* - Hittite Typesetting! 
 
 The images were made by Prof. Shosted at UIUC - full credit goes to him. *Gulsmi* means "I write."
 
@@ -16,6 +13,7 @@ Instructions: type your Hittite transliteration below, separated by dashes and w
 * *il-li-nu-wa* the spelling for [Illinois in Hittite](http://faculty.las.illinois.edu/rshosted/ne%C5%A1ili.html)
 <div id="mainframe">
     <div id="displayFrame">
+        <span class="signWrapper"> </span>
     </div>
     <div id="inputForm">
         <span id="inputSpan">
@@ -34,6 +32,7 @@ Instructions: type your Hittite transliteration below, separated by dashes and w
   padding: 20px;
   margin-top: 5px;
   margin-bottom: 5px;
+  min-height: 110px;
   width: 100%;
   /* display: inline-grid; */
   /* grid-template-columns: repeat(5, 1fr); */
