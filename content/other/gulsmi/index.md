@@ -6,7 +6,7 @@ draft: false
 
 <small> The sign images are from Prof. Shosted at UIUC, who extracted the images from the *Hethitische Zeichenlexikon*. 
 
-:camera: Yazılıkaya, source: [World Pilgrimage Guid](https://sacredsites.com/middle_east/turkey/yazilikaya.html)
+:camera: Yazılıkaya, source: [World Pilgrimage Guide](https://sacredsites.com/middle_east/turkey/yazilikaya.html)
 </small> 
 
 {{< lead >}} *Gulsmi* means "I write" in Hittite. This is a small webapp that aims to let you do the same from the comfort of your home without the hassle of having to get reeds (or chopsticks) and clay! {{</lead >}}
