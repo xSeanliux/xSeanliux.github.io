@@ -1,5 +1,5 @@
 ---
-title: "*Gulsmi* - Hittite Typesetting! "
+title: Gulsmi - Hittite Typesetting!
 
 draft: false
 ---
