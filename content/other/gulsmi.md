@@ -10,7 +10,7 @@ draft: false
 
 **Instructions**: Type your Hittite transliteration below, separated by dashes and without accents. Spaces aren't currently supported, so this is more just for singular words. In addition, disambiguation for different renderings of the same phonetic input haven't been implemented yet (e.g. *ak* vs *ek* or *u* and *ú*). For example, you can copy-paste the below into the box below: 
 
-* *dingir-istar* the goddess Ishtar
+* *DINGIR-ISTAR* the goddess Ishtar
 * *ag-ga-a-at-ta-ar* death, ruin
 * *il-li-nu-wa* the spelling for [Illinois in Hittite](http://faculty.las.illinois.edu/rshosted/ne%C5%A1ili.html)
 <div id="mainframe">
@@ -48,6 +48,7 @@ draft: false
 
 input {
     width: 100%;
+    color: #3c424d;
 }
 
 .signWrapper {
