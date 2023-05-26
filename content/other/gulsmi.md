@@ -12,7 +12,7 @@ draft: false
 
 * *DINGIR-ISTAR* the goddess Ishtar
 * *ag-ga-a-at-ta-ar* death, ruin
-* *il-li-nu-wa* the spelling for [Illinois in Hittite](http://faculty.las.illinois.edu/rshosted/ne%C5%A1ili.html)
+* *Il-li-nu-wa* the spelling for [Illinois in Hittite](http://faculty.las.illinois.edu/rshosted/ne%C5%A1ili.html)
 <div id="mainframe">
     <div id="displayFrame">
         <span class="signWrapper"> </span>
