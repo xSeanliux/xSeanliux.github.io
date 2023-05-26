@@ -4,7 +4,9 @@ title: Gulsmi - Hittite Typesetting!
 draft: false
 ---
 
-The images were made by Prof. Shosted at UIUC - full credit goes to him. *Gulsmi* means "I write."
+<small> The sign images are from Prof. Shosted at UIUC - full credit goes to him. </small> 
+
+*Gulsmi* means "I write" in Hittite. This is a small webapp that aims to let you do the same from the comfort of your home without the hassle of having to get reeds (or chopsticks) and clay!
 
 Instructions: type your Hittite transliteration below, separated by dashes and without accents. Spaces aren't currently supported, so this is more just for singular words. In addition, disambiguation for different renderings of the same phonetic input haven't been implemented yet (e.g. *ak* vs *ek* or *u* and *ú*). For example, you can copy-paste the below into the box below: 
 
