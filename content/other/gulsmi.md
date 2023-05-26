@@ -8,7 +8,7 @@ draft: false
 
 *Gulsmi* means "I write" in Hittite. This is a small webapp that aims to let you do the same from the comfort of your home without the hassle of having to get reeds (or chopsticks) and clay!
 
-Instructions: type your Hittite transliteration below, separated by dashes and without accents. Spaces aren't currently supported, so this is more just for singular words. In addition, disambiguation for different renderings of the same phonetic input haven't been implemented yet (e.g. *ak* vs *ek* or *u* and *ú*). For example, you can copy-paste the below into the box below: 
+**Instructions**: Type your Hittite transliteration below, separated by dashes and without accents. Spaces aren't currently supported, so this is more just for singular words. In addition, disambiguation for different renderings of the same phonetic input haven't been implemented yet (e.g. *ak* vs *ek* or *u* and *ú*). For example, you can copy-paste the below into the box below: 
 
 * *dingir-istar* the goddess Ishtar
 * *ag-ga-a-at-ta-ar* death, ruin
