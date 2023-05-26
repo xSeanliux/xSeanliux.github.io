@@ -4,7 +4,7 @@ title: Gulsmi - Hittite Typesetting!
 draft: false
 ---
 
-<small> The sign images are from Prof. Shosted at UIUC - full credit goes to him. </small> 
+<small> The sign images are from Prof. Shosted at UIUC, who extracted the images from the *Hethitische Zeichenlexikon*. </small> 
 
 *Gulsmi* means "I write" in Hittite. This is a small webapp that aims to let you do the same from the comfort of your home without the hassle of having to get reeds (or chopsticks) and clay!
 
