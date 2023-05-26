@@ -5,9 +5,9 @@ description: "all about me!"
 draft: true
 ---
 
-# Hittite Typesetting! 
+# *Gulsmi* - Hittite Typesetting! 
 
-The images were made by Prof. Shosted at UIUC. 
+The images were made by Prof. Shosted at UIUC - full credit goes to him. *Gulsmi* means "I write."
 
 Instructions: type your Hittite transliteration below, separated by dashes and without accents. Spaces aren't currently supported, so this is more just for singular words. In addition, disambiguation for different renderings of the same phonetic input haven't been implemented yet (e.g. *ak* vs *ek* or *u* and *ú*). For example, you can copy-paste the below into the box below: 
 
@@ -19,7 +19,7 @@ Instructions: type your Hittite transliteration below, separated by dashes and w
     </div>
     <div id="inputForm">
         <span id="inputSpan">
-            <input type="text" id="inputBox"></input>
+            <input type="text" placeholder = "Enter transliteration here!" id="inputBox"></input>
         </span>
     </div>
 </div>
@@ -31,7 +31,8 @@ Instructions: type your Hittite transliteration below, separated by dashes and w
 #displayFrame {
     overflow: auto;
   background-color: white;
-  padding: 40px;
+  padding: 20px;
+  margin-bottom: 5px;
   width: 100%;
   /* display: inline-grid; */
   /* grid-template-columns: repeat(5, 1fr); */

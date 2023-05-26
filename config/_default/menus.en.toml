@@ -56,7 +56,7 @@
   weight = 30
 
 [[main]]
-  name = "Hittite Typesetter"
+  name = "*Gulsmi*"
   parent = "other"
   pageRef = "other/hittite_typesetting"
   weight = 10
