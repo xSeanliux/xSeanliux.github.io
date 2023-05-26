@@ -35,6 +35,7 @@ draft: false
 **Known Issues**
 * There are quite a few missing signs, especially some Sumerograms/Akkadograms such as EZEN (without which we couldn't write about the festival of [AN.TAH.ŠUM](http://faculty.las.illinois.edu/rshosted/docs/Festival%20of%20AN-TAH-SUM.pdf)!)
 * A lack of a "space bar" which isn't so conductive to sentences (*nu-ta*)
+* There is currently no option to export the image, and so you have to take a screenshot currently ;(
 * Since signs have all been resized to the same height (72px), some flatter signs are out of proportion, including *be*, *hal*, *man*, and their variants. The glyph *as* has been patched, but the others are WIP.
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <!-- <script src="/js/hittite_typesetting.js"> -->
@@ -46,8 +47,8 @@ overflow: auto;
   padding: 20px;
   /* margin-top: 5px;
   margin-bottom: 5px; */
-  margin: auto;
-  min-height: 110px;
+  margin-bottom: 10px;
+  min-height: 120px;
   width: 100%;
   /* display: inline-grid; */
   /* grid-template-columns: repeat(5, 1fr); */
@@ -61,11 +62,12 @@ overflow: auto;
     display: flex;
     align-items: stretch;
     width: 100%;
+
 }
 
 #inputSpan {
     overflow: auto;
-    
+    margin-right: 10px;
     flex-grow: 4;
 }
 
