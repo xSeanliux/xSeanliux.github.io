@@ -4,7 +4,7 @@ author: "Sean Liu"
 date: 2022-08-12T03:13:37-07:00
 categories: ["compsci", "scans", "competitiveprogramming",
 "parallel"]
-draft: true
+# draft: true
 ---
 {{< katex >}}
 # Introduction 
