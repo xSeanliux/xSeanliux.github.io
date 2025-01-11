@@ -2,7 +2,8 @@
 title: "Parallel Scans"
 author: "Sean Liu"
 date: 2022-08-12T03:13:37-07:00
-categories: ["compsci", "scans", "competitiveprogramming"]
+categories: ["compsci", "scans", "competitiveprogramming",
+"parallel"]
 draft: true
 ---
 {{< katex >}}
@@ -28,7 +29,7 @@ The static case is not very interesting, and can be solved in linear time and sp
 We will show that you can get \\(O(\log N)\\) update and query times in the dynamic case with linear time preprocessing using a cute data structure named [Fenwick trees](#fenwick-trees), and build upon this foundation to intuitively explain the [Brent-Kung construction](#the-brent-kung-scan), leading to an \\(O(\log N)\\) construction of the scan array \\(b\\). 
 
 ## Fenwick trees: Fast Dynamic Sequential Algorithm
-### But what about updates? 
+### Dynamic Scans 
 Let's spice things up a little bit. What if, instead of only getting the array \\(b\\) where array \\(a\\) is static, we allowed for two types of operations? Here they are:
 1. `Query` \\(i\\): Find the value of \\(\sum_{j = 1}^i a_j\\)
 2. `Add` \\(i~x\\): Add \\(x\\) to \\(a_i\\).  
@@ -62,22 +63,25 @@ The Fenwick tree supports the two operations above: `Query` and `Add`. Additiona
 **Fact 1. For any positive integer \\(n\\), there are \\(O(\log n)\\) ones its binary representation.**
 
 **Fact 2. Out of all the ones in the binary expansion of some positive integer \\(n\\), there is a smallest one. We will call this number \\(\mathrm{lowbit}(n)\\). For example, \\(18 = 16 + 2\\), so its \\(\mathrm{lowbit}\\) is \\(2\\).**
+
+**Note.** It will be helpful to visualise indices in their binary representation whenever indices and lowbits are involved. For example, \\(i - \mathrm{lowbit}(i)\\) is \\(i\\) with its rightmost zero set to one. 
+
 #### The Query operation
-I trust the reader will need no convincing of these facts. Now, using this fact, we can do a clever sort of chunking. Say we wanted to find the prefix sum of the first \\(21\\) elements. Then we could divide the whole sum thus: 
+Now let's see how these facts can lead to significant speedups. Say we wanted to find the prefix sum of the first \\(21\\) elements. Then we could divide the whole sum thus: 
 $$
 \sum_{i=1}^{21}a_i=\sum_{i=1}^{16}a_i+\sum_{i=17}^{20}a_i+\sum_{i=21}^{21}a_i.
 $$
-What's the pattern here? The answer is that starting from \\(21\\), we always add the number corresponding to the lowbit: 
+What's the pattern here? The answer is that starting from \\(21\\), we always add the number of elements corresponding to the lowbit and recurse: 
 - The lowbit of \\(21\\) is \\(1\\), so we take \\(1\\) number, \\(a_{21}\\), and we add that to our answer;
 - The lowbit of \\(20\\) is \\(4\\), so we take \\(4\\) numbers, \\(a_{17}\\) to \\(a_{20}\\), and we add that to our answer; 
 - The lowbit of \\(16\\) is \\(16\\) itself, so we take the remaining \\(16\\) numbers.
 
 In general, to compute the prefix of the first \\(k\\) numbers, we take \\(\mathrm{lowbit}(k)\\) numbers from the end, and add that to our result. Of course, we also have to recurse to \\(k - \mathrm{lowbit}(k)\\). Thus intuitively for this to work, we have to maintain \\(\sum_{j = i  - \mathrm{lowbit}(i) + 1}^i a_j\\) for every \\(i\\) efficiently.
 
-Fenwick trees, also called Binary Index Trees (BITs), are used to solve this problem. 
+Fenwick trees, also called Binary Index Trees (BITs), are used to do exactly this. 
 Let's maintain an array, which we'll call \\(\mathrm{BIT}\\),
 defined on index \\(k\\) as the sum of elements from index \\(k - \mathrm{lowbit}(k) + 1\\) to index \\(k\\), inclusive. 
-Formally, \\(\mathrm{BIT}\\) is defined thus: 
+Formally, the array \\(\mathrm{BIT}\\) is defined thus: 
 
 $$
 \mathrm{BIT}_k=\sum _{i=k-\mathrm{lowbit}(k)+1}^ka_i.
@@ -96,8 +100,8 @@ int BIT_Query(int k) {
 #### The Add operation
 That's all good and well, but what about `Add`? Which entries of \\(\mathrm{BIT}\\) would we have to modify? And are there few enough of them so that we can update all of them in logarithmic time? 
 
-Suppose we wanted to do `Add` \\(k~x\\), and we have to update index \\(j\\). Let's try to find the smallest index that we have to update and try using that information to find the next smallest. Obviously, the smallest index that we'd have to change is \\(k\\) itself. The interesting part is using this information - we will show that \\(k' = k + \mathrm{lowbit}(k)\\) is the next smallest index that we have to change. To do this, 
-we will show two things: (1) \\(k' - \mathrm{lowbit}(k') < k\\) (i.e., that we do have to change index \\(k'\\)), and (2) for all indices between \\(k\\) and \\(k'\\), we do not have to change that index. 
+Suppose we wanted to do `Add` \\(k~x\\), and we have to update index \\(j\\). The strategy is to find the smallest index that we have to update and use that information to find the next smallest, and repeat. Obviously, the smallest index that we'd have to change is \\(k\\) itself. The interesting part is using this information - we will show that \\(k' = k + \mathrm{lowbit}(k)\\) is the next smallest index that we have to change. To do this, 
+we must show two things: (1) \\(k' - \mathrm{lowbit}(k') < k\\) (i.e., that we do have to change index \\(k'\\)), and (2) for all indices between \\(k\\) and \\(k'\\), we do not have to change that index. 
 
 Let's start with (1). Writing \\(k\\) as \\(x \cdot 2^r\\) where \\(2^r = \mathrm{lowbit}(k)\\) and \\(x\\) is odd, we may also express \\(k'\\) in terms of \\(x\\) and \\(r\\) as 
 
@@ -108,7 +112,7 @@ $$
 Since \\(x\\) is odd, it follows that \\(x + 1\\) is even and hence \\(\mathrm{lowbit}(k') \ge 2^{r + 1}\\).
 It follows that \\(k' - \mathrm{lowbit}(k') \le (x - 1) \cdot 2^r < k\\), confirming that we do have to update position \\(k'\\). 
 
-Now, what about all the indices between \\(k\\) and \\(k'\\)? Suppose \\(0 < z < \mathrm{lowbit}(k)\\), and we set \\(k'' = k + z\\). We want to prove that we do not have to update index \\(k''\\), or equivalently, prove that \\(k'' - \mathrm{lowbit}(k'') > k\\). 
+Now, what about all the indices between \\(k\\) and \\(k'\\)? Suppose \\(0 < z < \mathrm{lowbit}(k)\\), and \\(k'' = k + z\\) is some index between \\(k\\) and \\(k''\\). We want to prove that we do not have to update index \\(k''\\). Equivalently, that \\(k'' - \mathrm{lowbit}(k'') > k\\). 
 Since \\(z < \mathrm{lowbit}(k)\\), it follows that \\(\mathrm{lowbit}(k'') = \mathrm{lowbit}(z) \le z < \mathrm{lowbit}(k)\\). I will not prove this statement but leave it to the user to 
 demonstrate to themselves that it is true - consider the binary expansions of \\(k'' = k + z\\). It thus follows that
 
@@ -127,7 +131,7 @@ void BIT_Add(int k, int x) {
 ```
 ### Excursus: Fast lowbits 
 It's not the point of this post to delve into the inner workings of how [two's complement](https://en.wikipedia.org/wiki/Two%27s_complement) works in storing signed integers,
-but it's possible to exploit it and use bit operations to calculate \\(\mathrm{lowbit}(\cdot)\\) in constant time: 
+but it's possible to exploit it and use bit operations to calculate \\(\mathrm{lowbit}(\cdot)\\) in constant time in C/C++: 
 ```C++
 int lowbit(int k) {
     return k & -k;
@@ -147,18 +151,18 @@ The reader may be interested in the following generalisations of this data struc
 Fenwick trees were developed in 1989. The year is now 2025, and we have shiny new GPUs to play with. Can we make our scans even faster? 
 We will lay out some more rules to make our game more interesting: 
 1. We will solve the static scan problem - that is, no `Add` operations, only `Query`. 
-2. We now have a (theoretical) GPU at our disposal. Though this is not the case practically, we will assume that we have 
-as many cores as we need, and that warp size is infinite. This ensures that we can focus on the analysis of our 
+2. We will be working under an idealised parallel computing model. Though this is not the case practically, we will assume that we have 
+as many cores as we need, and that warp size is infinite, etc. This ensures that we can focus on the analysis of our 
 algorithm instead of having to apply other tricks to deal with pesky real-world constraints.
 
 Note that throwing a GPU at the code in the [Introduction](#introduction) won't work, as the code is recurrent and has a 
 linear data dependency: you can't compute \\(b_i\\) until you've computed \\(b_{i-1}\\). 
 
 The [Brent-Kung algorithm](https://ieeexplore.ieee.org/abstract/document/1675982?casa_token=-kIKEZc2vFoAAAAA:KlicFhXJ_JP5smZUbBpgoQQYe5vFgmIv5fpSAbijOWYxxYzUHUEb4ox6zyLIFiBd6tH89lr6Sg) was developed in 1982 (earlier than Fenwick trees!), and was originally used as an adder in chip design.
-Here, I would like to give a more intuitive understanding of how it works by understanding it as a "parallel BIT." By the end of this section, my goal is for you to be able to intuitively grasp why the Brent-Kung Scan is designed the way it is, be able to rederive it given pen and paper, and more ambitious readers may want to implement their own scan kernel in CUDA C. 
+Here, I would like to give a more intuitive understanding of how it works by understanding it as analogous to two phases of parallel BIT operations. By the end of this section, my goal is for you to be able to intuitively grasp why the Brent-Kung Scan is designed the way it is, be able to rederive it given pen and paper, and more ambitious readers may want to implement their own scan kernel in CUDA C. 
 
 ### The Brent-Kung Architecture
-The following image is taken from Brent and Kung's paper and showcases the overarching architecture of the scan for \\(N = 16\\). The starting array is at the bottom, and operations are done from the bottom to the top. At the top, values \\(c_{1}\\) to \\(c_{16}\\) denote the prefix sum from right to left. Nodes coloured black denote summation. For example, at \\(T = 4\\) the value of the array at index \\(8\\) is added to index \\(16\\). 
+The following image is taken from [Brent and Kung's 1982 paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=1675982&casa_token=mQzDf0JhJa0AAAAA:tn8gGzl4F0RE9v1FarJUOcnuhoma8ceCNjsnqpLmZSMmd3L7zvG0qNACpbT0kQRh_eP705PHYw) (Figure 5) and shows the overarching architecture of the scan for \\(N = 16\\). The starting array is at the bottom, and operations are done from the bottom to the top. At the top, values \\(c_{1}\\) to \\(c_{16}\\) denote the prefix sum from right to left. Nodes coloured black denote summation. For example, at \\(T = 4\\) the value of the array at index \\(8\\) is added to index \\(16\\). 
 ![Brent & Kung (1982), Fig. 5](images/brent_kung_architecture.png)
 
 Notably, connected black lines represent data dependencies. There are two chains of length \\(O(\log N)\\), and so we expect the number of iterations to be roughly \\(T = O(\log N)\\). So this approach is efficient, but we have not yet answered the question of *why* this works.
@@ -175,6 +179,8 @@ Instead, we would like to maintain the following invariant:
 
 In other words, the array on iteration \\(T\\) is a sort of "truncated" \\(\mathrm{BIT}\\) array, with no sums having more than \\(2^T\\) elements. It's easy to verify that the invariant holds for \\(T = 0\\) (array \\(a\\) itself), and that if we were able to maintain this invariant, we would only need \\(T = O(\log N)\\) iterations to compute the full \\(\mathrm{BIT}\\) array.
 
+> the array on iteration \\(T\\) is a sort of "truncated" \\(\mathrm{BIT}\\) array, with no sums having more than \\(2^T\\) elements.
+ 
 Maintaining this invariant is actually not super difficult: suppose that we are at some iteration \\(t > 0\\). Then all the elements \\(i\\) that have to be updated are the ones whose lowbit is greater or equal to \\(2^t\\). That is, all multiples of \\(2^t\\). Suppose index \\(i = x \cdot 2^t\\). Currently, \\(c_i\\) stores the sum of \\(2^{t - 1}\\) values: \\(\sum_{j = i - 2^{t - 1} + 1}^i a_j\\), and \\(c_{i - 2^{t - 1}}\\) also stores the sum of \\(2^{t - 1}\\) values, \\(\sum_{j = i - 2^t}^{i - 2^{t - 1}} a_j\\). Hence we just need to combine the two to get our desired result! Note that there aren't data depenedency issues because \\(i - 2^{t - 1}\\) has a lowbit of \\(2^{t - 1}\\) and thus does not need to be updated.
 
 Thus at iteration \\(i\\), we update every \\(c_i\\) with the rule \\(c_i \gets c_i + c_{i - 2^{t - 1}}\\) for all \\(i = x \cdot 2^t\\) all at once. The reader may check that this is consistent with the bottom tree in the above figure. 
