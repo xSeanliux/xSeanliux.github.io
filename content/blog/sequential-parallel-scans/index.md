@@ -212,9 +212,9 @@ As far as I know, this article is the first to point out the connection between 
 
 ## References & Resources
 
-1. Brent, and Kung. "A regular layout for parallel adders." IEEE transactions on Computers 100.3 (1982): 260-264.
-2. Kogge, Peter M., and Harold S. Stone. "A parallel algorithm for the efficient solution of a general class of recurrence equations." IEEE transactions on computers 100.8 (1973): 786-793.
-3. Fenwick, Peter M. "A new data structure for cumulative frequency tables." Software: Practice and experience 24.3 (1994): 327-336.
+1. Brent, and Kung. "A regular layout for parallel adders." *IEEE transactions on Computers* 100.3 (1982): 260-264.
+2. Kogge, Peter M., and Harold S. Stone. "A parallel algorithm for the efficient solution of a general class of recurrence equations." *IEEE transactions on computers* 100.8 (1973): 786-793.
+3. Fenwick, Peter M. "A new data structure for cumulative frequency tables." *Software: Practice and experience* 24.3 (1994): 327-336.
 4. Kirk, David B., and W. Hwu Wen-Mei. Programming massively parallel processors: a hands-on approach. Morgan kaufmann, 2016.
 5. [Algorithms for Competitive Programming - Fenwick Tree](https://cp-algorithms.com/data_structures/fenwick.html)
 6. [UIUC ECE408 Applied Parallel Programming, Lecture 16: Parallel Computation Patterns - Parallel Scan](https://lumetta.web.engr.illinois.edu/408-S20/slide-copies/ece408-lecture16-S20.pdf)
