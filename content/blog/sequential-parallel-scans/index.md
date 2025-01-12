@@ -1,13 +1,20 @@
 ---
-title: "Parallel Scans"
+title: "Brent-Kung Scans as Parallel Fenwick Tree Operations"
 author: "Sean Liu"
-date: 2022-08-12T03:13:37-07:00
+date: 2024-01-11T17:51:37-06:00
 categories: ["compsci", "scans", "competitiveprogramming",
 "parallel"]
-# draft: true
+draft: false
+showTableOfContents: true
 ---
 {{< katex >}}
-# Introduction 
+<small>
+
+:camera: Image credit: [Brent & Kung 1982](https://ieeexplore.ieee.org/abstract/document/1675982?casa_token=Jfi_Y0Q7_SIAAAAA:DoOq0_BK1MFP7Cf_2H7xSisBQP6-RZtuuXzHbN4CnZLkM3XQMeReMxiDNfMPt1-6B_9e1F18Pw): Fig. 5
+
+</small>
+
+## Introduction 
 The *scan* problem, also known as the *prefix sum* problem, isn't very hard to state: 
 
 **Scan Problem**: Given an array of 
@@ -148,8 +155,7 @@ The reader may be interested in the following generalisations of this data struc
 - How does one maintain higher-dimensional prefix sums with \\(\log\\) penalties? For example, how do I maintain grid prefixes and updates in \\(O(\log^2 N)\\) time per query/update?
 - Instead of prefix sums, can one maintain other operations? Prefix products? Prefix matrix products? What about prefix min/maxes for range queries? Which operations in general can I support?
 ## The Brent-Kung Scan
-Fenwick trees were developed in 1989. The year is now 2025, and we have shiny new GPUs to play with. Can we make our scans even faster? 
-We will lay out some more rules to make our game more interesting: 
+Fenwick trees were developed in 1989. The year is now 2025, and we have shiny new GPUs to play with. Can we make our scans even faster? The answer is yes, but first two disclaimers:
 1. We will solve the static scan problem - that is, no `Add` operations, only `Query`. 
 2. We will be working under an idealised parallel computing model. Though this is not the case practically, we will assume that we have 
 as many cores as we need, and that warp size is infinite, etc. This ensures that we can focus on the analysis of our 
