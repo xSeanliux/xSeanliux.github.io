@@ -6,6 +6,8 @@ categories: ["cs", "programming"]
 draft: false
 ---
 
+> Human statement: I do not use LLMs in any of my blog posts for writing nor editing (though obviously it is the subject matter).
+
 ## Introduction
 
 I've been seeing a bunch of posts on [Hacker News](https://news.ycombinator.com/) and [lobste.rs](lobste.rs), so thought it might be worth giving my 2¢. This post is about how I've gradually come to think about the use of LLMs to write code and help software engineers' (read: my) life easier, common patterns I've seen people adopt, and pitfalls I've observed many -- yours truly included -- fall into when trying to use something like [Claude Code](https://claude.ai) to aide in software development / vibecoding. I will use two recent personal projects as an example, but of course one should be able to apply this in a more professional setting. Like you no doubt, I have also read quite a few posts on this topic; I will also quote some posts I (dis)agree with in this post. I hope at least some of the ideas here are new, and if not hopefully I shed them in a newer light; failing _that_, that they are at least organised in a better way.
