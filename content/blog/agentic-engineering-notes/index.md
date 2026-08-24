@@ -14,6 +14,8 @@ I've been seeing a bunch of posts on [Hacker News](https://news.ycombinator.com/
 
 My stance on the use of LLMs in engineering is not too controversial I hope: I think that they represent a significant change in how we work, and that they can be a tool to significantly boost developer productivity. I do not think that these machines are going to replace humans any time soon. I think of them as trains moreso than bicycles: _if_ you set the tracks right, _if_ you clear all obstacles, _if_ you know exactly where you want to go, then you'll get to your destination faster than if you were on a bicycle. Indeed, there are a plethora of usecases for trains over bicycles, but bicycles yield more control to the operator, are more nimble, require more skill to manouevre, and can get you to more places. I think it is wrong to want to delegate all work to LLMs (though it is certainly a goal to strive towards) as matrix multiplication is hardly a replacement for human thought; conversely it is Luddite and counter-productive to refuse to use LLMs in writing code in a professional setting (one is of course free to do whatever they want in private). This blog post is about _how_ I am setting these train tracks, not if they should be set.
 
+Finally, I'd like to state that everything I'm writing about here is just standard "good" engineering practice that is often overlooked or just not thought about with enough care, not because it's not important or anything, but just that the implementation of which just takes time - time that is no longer a concern with Claude, and so we should just build things "properly" given the chance. In addition, I've found these specific nuggets of good software engineering to have outsized returns when done right in the context of working with AI and making it not do stupid things.
+
 ## Bones and meat & "AI native engineering" 
 
 <small> god I hate buzzwords </small>
@@ -70,7 +72,7 @@ For example, my CLI currently looks something like
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
-This is not perfect, but notice that 
+The point is that Claude is _very_ good at doing the CLI wiring! It's up to the human to define which operations you'd like to expose, the parameterisations to allow, etc., but after that Claude is very good at implementing the CLI spec. This is an example of using Claude to build scaffolding to make its operations more reliable - this Python `Typer/Rich` scaffolding is low-risk boilerplate code that Claude can few-shot without much issue, but it boosts the stability of Claude in the repo considerably. Such cheap and tools are now viable because [Code is Cheap](https://nadh.in/blog/code-is-cheap/); as nobody cares about this wiring it's fine it's AI-generated slop. A few notes: 
 
 - This is runnable with `uv run` so Claude does not have to worry about requirements, virtual environments, etc. For Python CLIs I recommend using [uv](https://docs.astral.sh/uv/); you could also make your CLIs blazing fast and use a compiled language such as C++ or Rust.
 - The commands section basically list all the operations that I'd like to be able to do: `simulation`, `infer`, `score`, etc. Underneath they fan out to the aforementioned handwritten bash scripts - but Claude doesn't need to know that, nor where they are situated, nor what order to run them in. 
@@ -78,10 +80,49 @@ This is not perfect, but notice that
 
 ### Observability and the data model
 
-Another thing I improved with this setup is to have a very explicit _data model_ for everything. 
+Another thing I improved with this setup is to have a very explicit _data model_ for everything. The data model is how the human intends for the system to be reasoned about. It is a statement of what the problem space is and what we care about. What's more, having an explicit data model lets Claude very easily have all the context it needs without having to go search everything up in different locations up. Again this contributes to everything being fast, context-efficient, and deterministic. 
 
-- yaml based input model 
-- output csv joinable
+In my particular case, I implemented this in two ways: a YAML-based input model to specify an entire experiment, and making sure my outputs were stored in a predictable place + ensuring everything was trivially joinable. This YAML-based input model might look something like:
+
+```yaml
+default_sim_configs: &default_sim_configs
+  poly: high
+  homoplasy_factor: 0.1
+  n_chars: 80
+
+experiment_folder: experiments/smoke_test
+simulation:
+  n_taxa: 30
+  n_trees: 1
+  simulation_params:
+    # condition 1: high polymorphism
+    - <<: *default_sim_configs
+      poly: high
+    # condition 2: low polymorphism
+    - <<: *default_sim_configs
+      poly: low
+
+methods:
+  mp4: {}
+  astral_3:
+    is_exact: False
+    bipartition_strategies:
+      - mp4_trees
+      - ga_trees
+  wastral: {} 
+```
+
+The point of this file being that it is meant to be the singular source of truth to configure the CLI. This makes it very easy for Claude (or a human) to tell what is going on in a particular experiment instead of scouring a bunch logs / relying on file structure.
+
+With the output, it's just standard good data modelling: have a set of hopefully universal primary dimensions to join on, have informative facts, link to raw files, etc. I'm not here to tell you how to do good data engineering (I'd probably be the last one you'd ask), I'm saying that even for personal projects, if you're enlisting the help of LLMs it's definitely worth it to try and establish a good data model. The only reason one wouldn't do it for a personal project before was because it would be too much grunt work -- but hey guess what LLMs are good at? With a short document to explain the semantics of columns and join keys, Claude becomes _very_ good at understanding the problem space.
+
+## Throwaway code as dev tools 
+
+The argument I gave above on why CLIs are conducive to LLM development and usage (low-risk code that is OK to be slop and which supports the main, hopefully not slop, function of the codebase) can be extended to other parts of the developer experience. There is a wide gap between "just let LLMs generate code and I'll merge it in" and "I'm handwriting everything." LLMs offer _optionality_: the option to not care about the code. It does not mean you care about no code (this is called _irresponsibility_). Indeed, I think to be effective, an engineer needs to very consciously make the tradeoff between code that she cares about, and code she does not. 
+
+I do not think it controversial to say that the understanding of code, the intent behind development, the decision making process, and human thought behind codebases should not be outsourced to machines. However, much of that can be made more efficient if you allow some LLM intervention. For example, generating dashboards for designs to share with teammates, or for observability around your systems are all very good reasons for "throwaway code," you don't need to care about the HTML frontend nor how it's hosting the HTTPS website, just that you have a usable interface (and perhaps that it's pulling from the right APIs). Once again one sees productivity increases for next to no effort - Claude is more than good enough at doing rote wiring work and making a pretty(ish) frontend to display data.
+
+Reviewing code is another front of this - suppose that you're working on something that you _do_ want to fully control and understand. I think it's acceptable for such changes to be almost entirely AI-generated as long as you are able to explain all of it and have read the entire thing. It is not fun to read a PR diff the way GitHub presents it - in sorted file order. Instead, it is much better if it is presented in some other way (e.g., call stack order, interactive walkthroughs, etc). This is an example of using an LLM to boost understanding - it presents its code in a more human-friendly way so that it can be reviewed and picked apart. Skills like `/code-review`, [`/ponytail`](https://github.com/DietrichGebert/ponytail), &co can only take you so far, because they are ultimately _local optimisers_, making code look good locally. It does not know _why_ you designed the architecture this way (of course you can write it in the spec but does anybody actually do that? Does anybody write down _every_ minute decision that affects the architecture?). In short, it does not understand _intent_.
 
 ## Code as intent 
 
