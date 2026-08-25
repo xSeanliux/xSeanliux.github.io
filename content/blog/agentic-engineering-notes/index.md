@@ -10,9 +10,9 @@ draft: false
 
 ## Introduction
 
-I've been seeing a bunch of posts on [Hacker News](https://news.ycombinator.com/) and [lobste.rs](lobste.rs), so thought it might be worth giving my 2¢. This post is about how I've gradually come to think about the use of LLMs to write code and help software engineers' (read: my) life easier, common patterns I've seen people adopt, and pitfalls I've observed many -- yours truly included -- fall into when trying to use something like [Claude Code](https://claude.ai) to aide in software development / vibecoding. I will use two recent personal projects as an example, but of course one should be able to apply this in a more professional setting. Like you no doubt, I have also read quite a few posts on this topic; I will also quote some posts I (dis)agree with in this post. I hope at least some of the ideas here are new, and if not hopefully I shed them in a newer light; failing _that_, that they are at least organised in a better way.
+I've been seeing a bunch of posts on [Hacker News](https://news.ycombinator.com/) and [lobste.rs](lobste.rs) around AI usage in the context of software engineering, so thought it might be worth sharing my 2¢. This post is about how I've gradually come to think about the use of LLMs to write code and help software engineers' (read: my) life easier, common patterns I've seen people adopt, and pitfalls I've observed many -- yours truly included -- fall into when trying to use agents like [Claude Code](https://claude.ai) to aide in software development / vibecoding. I hope at least some of the ideas here are new, and if not hopefully I shed them in a newer light; failing _that_, that they are at least organised in a better way.
 
-My stance on the use of LLMs in engineering is not too controversial I hope: I think that they represent a significant change in how we work, and that they can be a tool to significantly boost developer productivity. I do not think that these machines are going to replace humans any time soon. I think of them as trains moreso than bicycles: _if_ you set the tracks right, _if_ you clear all obstacles, _if_ you know exactly where you want to go, then you'll get to your destination faster than if you were on a bicycle. Indeed, there are a plethora of usecases for trains over bicycles, but bicycles yield more control to the operator, are more nimble, require more skill to manouevre, and can get you to more places. I think it is wrong to want to delegate all work to LLMs (though it is certainly a goal to strive towards) as matrix multiplication is hardly a replacement for human thought; conversely it is Luddite and counter-productive to refuse to use LLMs in writing code in a professional setting (one is of course free to do whatever they want in private). This blog post is about _how_ I am setting these train tracks, not if they should be set.
+My stance on the use of LLMs in engineering is not too controversial I hope: I think that they represent a significant change in how we work and that they can be a tool to significantly boost developer productivity. I do not think that these machines are going to replace humans any time soon (and I do not think a CS degree is useless, in fact, the contrary). I think of them as trains moreso than bicycles: _if_ you set the tracks right, _if_ you clear all obstacles, _if_ you know exactly where you want to go, then you'll get to your destination faster than if you were on a bicycle. Indeed, there are a plethora of usecases for trains over bicycles, but bicycles yield more control to the operator, are more nimble, require more skill to manouevre, and can get you to more places. I think it is wrong to want to delegate all work to LLMs (though it is certainly a goal to strive towards) as matrix multiplication is hardly a replacement for human thought; conversely it is Luddite and counter-productive to refuse to use LLMs in writing code in a professional setting (one is of course free to do whatever they want in private). This blog post is about _how_ I am setting these train tracks, not if they should be set.
 
 Finally, I'd like to state that everything I'm writing about here is just standard "good" engineering practice that is often overlooked or just not thought about with enough care, not because it's not important or anything, but just that the implementation of which just takes time - time that is no longer a concern with Claude, and so we should just build things "properly" given the chance. In addition, I've found these specific nuggets of good software engineering to have outsized returns when done right in the context of working with AI and making it not do stupid things.
 
@@ -40,7 +40,7 @@ Instead, I took the time to design code, make sure it expresses the correct data
 
 This brings me to my first point, determinism and CLI tooling.
 
-## Determinism and CLI tooling
+### Determinism and CLI tooling
 
 The "bring Claude into our repo story" goes like this: 
 
@@ -49,9 +49,9 @@ The "bring Claude into our repo story" goes like this:
 2. You then identify common things that you'd like Claude to do repetitively. For example, running CI, reviewing PRs, or gathering context. You package these as custom [skills](https://support.claude.com/en/articles/12512176-what-are-skills) to invoke. This makes sure your prompts are deterministic, but you soon find that your context again bloats, and the commands you ask Claude to run... don't always get ran correctly. 
 3. You then think to gather all the deterministic parts into a bash script and ask Claude to call these scripts in your skills. This effectively makes your skills deterministic _and_ significantly reduces context bloat.
 
-Sound familiar? Well, this is nothing new, not even with agents. This is **exactly how devs do things**! Devs will onboard onto a new project, slowly get acquainted, get frustrated, and build tools to help them with their work. This is exactly the same. So why not make step 3 the standard, so that humans and agents can both benefit? Indeed, I propose that the **CLI** itself should be a first-class citizen instead of a ragtag bunch of bash/python scripts. If you are primarily using agents to interact with the code, it is worth a) defining the contact surface by defining all possible operations in the CLI and then asking your LLM to _only_ run commands in the CLI, and b) making sure your CLI is good. Oversimplifying of course but this is hopefully a simple _modus ponens_: if the only sanctioned way for agents to interact with things in your repo are read commands & your CLI, and your CLI contains sanctioned operations that are implemented correctly, then your agents will be predictable and correct. Moreover, it won't have to spend valuable time and tokens figuring out _what_'s correct to run, or run into any of the multitude of failure modes possible (e.g., your dataset's not partitioned in the right way so queries subtly take much longer, assuming that a command appends instead of upserts so your data gets accidentally deleted, etc.) because it just has to run a single CLI command. 
+Sound familiar? This is nothing new, not even with agents. This is **exactly how devs work**! Devs will onboard onto a new project, get acquainted, subsequently frustrated with some rote work, and build tools to help them automate. This is exactly the same. So why not make step 3 the standard, so that humans and agents can both benefit? I propose that the **CLI** itself should be a first-class citizen instead of a ragtag bunch of bash/python scripts referenced to by a skill. If you are primarily using agents to interact with the code, it is worth (a) defining the contact surface by defining all possible operations in the CLI and then asking your LLM to _only_ run commands in the CLI, and (b) making sure your CLI is easy to work with. Oversimplifying of course but this is hopefully a simple _modus ponens_: if the only sanctioned way for agents to interact with things in your repo is through the CLI, and your CLI is implemented well, then your agents will be predictable and correct. Moreover, it won't have to spend valuable time and tokens figuring out _what_'s correct to run, or run into any of the multitude of failure modes possible (e.g., your dataset's not partitioned in the right way so queries subtly take much longer, assuming that a command appends instead of upserts so your data gets accidentally deleted, etc.) because it just has to run a single CLI command. 
 
-For example, my CLI currently looks something like
+For example, my CLI in my phylogenetics research repo currently looks something like
 
 ```
 (base) *[main]$ uv run -m  scripts.py.cli.main --help
@@ -80,9 +80,9 @@ The point is that Claude is _very_ good at doing the CLI wiring! It's up to the 
 
 ### Observability and the data model
 
-Another thing I improved with this setup is to have a very explicit _data model_ for everything. The data model is how the human intends for the system to be reasoned about. It is a statement of what the problem space is and what we care about. What's more, having an explicit data model lets Claude very easily have all the context it needs without having to go search everything up in different locations up. Again this contributes to everything being fast, context-efficient, and deterministic. 
+Another thing I improved with this setup is to have a very explicit _data model_ for everything. The data model is how the human intends for the system to be reasoned about. It is a statement of what the problem space is and what we care about. What's more, having an explicit data model lets Claude very easily have all the context it needs without having to go search everything up in different locations up. Again this contributes to everything being fast, context-efficient, and deterministic. Nothing groundbreaking here, just that the calculus has changed such that having a good data model is both easy to do _and_ gives immense benefits.
 
-In my particular case, I implemented this in two ways: a YAML-based input model to specify an entire experiment, and making sure my outputs were stored in a predictable place + ensuring everything was trivially joinable. This YAML-based input model might look something like:
+In my particular case, I applied this in two ways: a YAML-based input model to specify an entire experiment, and making sure my outputs were stored in a predictable place + ensuring everything was trivially joinable. This YAML-based input model might look something like:
 
 ```yaml
 default_sim_configs: &default_sim_configs
@@ -114,7 +114,39 @@ methods:
 
 The point of this file being that it is meant to be the singular source of truth to configure the CLI. This makes it very easy for Claude (or a human) to tell what is going on in a particular experiment instead of scouring a bunch logs / relying on file structure.
 
-With the output, it's just standard good data modelling: have a set of hopefully universal primary dimensions to join on, have informative facts, link to raw files, etc. I'm not here to tell you how to do good data engineering (I'd probably be the last one you'd ask), I'm saying that even for personal projects, if you're enlisting the help of LLMs it's definitely worth it to try and establish a good data model. The only reason one wouldn't do it for a personal project before was because it would be too much grunt work -- but hey guess what LLMs are good at? With a short document to explain the semantics of columns and join keys, Claude becomes _very_ good at understanding the problem space.
+With the output, it's just standard good data modelling: have a set of hopefully universal primary dimensions to join on, have informative facts, link to raw files, etc. I'm not here to tell you how to do data engineering properly (I'd probably be the last one you'd ask), I'm saying that even for personal projects, if you're enlisting the help of LLMs it's definitely worth it to try and establish a good data model. The only reason one wouldn't do it for a personal project before was because it would be too much grunt work -- but hey guess what LLMs are good at? With a short document to explain the semantics of columns and join keys, Claude becomes _very_ good at understanding the problem space.
+
+### Another example: `seba` 
+
+Another example I'd like to give is [`seba`](https://github.com/xSeanliux/seba), a tutor skill I'm working on, and that I'm currently interacting with to go through the material in the fantastic [Category Theory Illustrated](https://abuseofnotation.github.io/category-theory-illustrated/). It follows a very similar pattern of a deterministic CLI + a skill to prime agents to interact with the CLI. It tries to solve the problem of "long-term learning," i.e., if you want to learn a whole _syllabus_ through Claude, you're most likely going to need more than one session (or equivalently clear the same session). How do you persist learning progress through sessions? How does Claude know what to go over in each session? My solution is thus: 
+
+- When you first start a new subject, you give it some subject matter. Claude generates a syllabus of "goals" in YAML format (data model!) that might look something like 
+
+```yaml
+goal: Understand introductory probability     
+subject: probability                          
+concepts:
+  - id: sample-spaces                          
+    name: Sample spaces and events             
+    prereqs: []                                
+    soft_prereqs: []                           
+    confusable_with: []                        
+    kc_type: concept                           
+    sources: []                                
+    status: unseen                             
+    est_sessions: 1                            
+  - id: conditional-probability
+    name: Conditional probability and Bayes
+    prereqs: [sample-spaces]                   
+    soft_prereqs: []
+    confusable_with: []
+    kc_type: concept
+    sources: []
+    status: unseen
+    est_sessions: 2
+```
+
+- Every session is focused on a new goal, and Claude is instructed to run `seba status` to see statuses of all goals, then to pick one and run `seba start GOAL`. During a session Claude may mark a goal with its difficulty (paired with a spaced repetition module to maximise recall) / add notes such as what went well, common confusion points, etc. to a Markdown file. All of these operations have a dedicated CLI command, so that Claude only has to know to use these commands; everything else is already structured.
 
 ## Throwaway code as dev tools 
 
@@ -126,5 +158,16 @@ Reviewing code is another front of this - suppose that you're working on somethi
 
 ## Code as intent 
 
-1. Agents do not know intent 
-2. There are tons of way to pass tests and have the same behaviour, but how it is written in the code expresses intent around how the code is intended to grow, how it is intended to _not_ grow, assumptions around modes of failure are expected (and conversely about what kinds of failures are _not_ expected).
+When you write a piece of software, you have all sorts of things in mind. How your code should behave and that it should pass unit tests / integration tests / linters is only the first layer. I subscribe to Naur's view that [programming is theory building](https://pages.cs.wisc.edu/~remzi/Naur.pdf), and encoded within the codebase are innumerable tiny decisions on how to organise code, subtle tradeoffs in performance, readability, extensibility, etc., that are just not discernable by unit tests alone. Tests and asserts you don't write matter as much those that you _do_ (because they might represent some underlying assumption you have that you know is valid, for example), repeated dataclasses might not be bloat but a conscious statement on module boundaries, and architecture designs often make it easier or more difficult for a piece of software to be extended in various ways, implicitly encoding the engineer's vision. None of this can be captured by benchmarks or a skill because (a) this is often a matter of taste and hence subjective, and more fundamentally, (b) you cannot test for what is expected to be _absent_. A simple function with 1000 unit tests and way too many guards in its code will work but will not sufficiently express the _intent_ of the function (not to mention its performance).
+
+One might make the counterargument that this is only valid insofar as humans need to read the code, and models get more powerful, one will not need to read the code just like we do not (often) read compiled machine code. The analogy here is that the C++/machine code of yesteryear is directly comparable to the Markdown/actual C++ of the present. Sure - you can try to describe everything comprehensively in a spec in natural language, but one often finds that this spec is not so far removed from the code itself. That is not to say you should not do this sort of spec-driven development, just that you have to take some care in doing so. I find it most useful to jot down an existing design / write pseudocode -- and then iterate with Claude to iron things out and then turn it into a spec to implement, trusting in its ability to do the annoying wiring up. Seeding Claude with a design you already know drastically improves your ability to read and critique its code later on, though it often will still make mistakes. Being able to identify these subtle mistakes and critique an architecture is why I still think a proper (not necessarily formal) CS education is still (and even more) valuable: now that writing the code itself is easy the onus on all devs is in the decision process.
+
+These sorts of mistakes are often not due to "the model being dumb" (though it does happen), but that it's trying to make a tradeoff based on limited/guessed/wrong information. Not saying that you can't anticipate every assumption it'll make and bake it into the spec, just saying that at some point you run into diminishing returns, and if you successfully do that you've written, for all intents and purposes, code anyway.
+
+## Tending the garden
+
+I did not come up with this analogy myself, but thought it'd be useful to share.
+
+The first analogy is tending a garden: traditional (i.e., handwritten) software is very deliberate and slow, it'll get the job done and you'll come out on the other side after a lot of toil, and skilled landscapers will end up with a beautiful garden. Now imagine you want to expand to managing a much larger garden, and you come into posession of a large quantity of extremely potent bonemeal. These stochastic code parrots are exactly like that bonemeal: it is very powerful but hard to control and can easily make your life a lot worse if not done correctly. The misuse of this bonemeal will turn your garden into an anarchic wastefield, but if you know to construct frames and supports around which you guide your plants to grow, then you have a very effective way to manage a bigger estate, able to complete larger projects in a fraction of the time as before. With traditional gardening, you did not have to construct any frames or scaffolds but to be able to use bonemeal you have to invest in extra steps to keep your plants behaving; in other words, you changed the way you work to make the best use of a much more powerful tool.
+
+**TL;DR** my opinion is that AI-assisted engineering is here to stay, and that it offers us optionality to decide which parts of code we care about vs it just being scaffolding / throwaway dashboards. Having a clean set of (CLI) tools and a transparent data model so that LLMs and humans can more easily interact with the code base pays dividends; with how good AIs are at wiring things up these are almost free wins that even codebases with a single contributor can benefit from. Lastly, I do not think that models are good enough to manage larger systems that people care about just yet for structural reasons - *own your design and your thought process*! 
