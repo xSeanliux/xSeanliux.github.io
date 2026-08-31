@@ -1,0 +1,6 @@
+/* Justify body text in single pages (not headings, lists, code, or captions). */
+article .prose p {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
