@@ -1,5 +1,5 @@
 ---
-title: "How I use LLMs"
+title: "Notes on LLM usage"
 author: "Sean Liu"
 date: 2026-08-23T00:29:00-05:00
 categories: ["cs", "programming"]
@@ -10,7 +10,7 @@ draft: false
 
 ## Introduction
 
-This post is about how I currently think about the use of LLMs to aid software development. I hope at least some of the ideas here are new, and if not I shed them in a newer light; failing _that_, that they are at least organised in a better way.
+This post is about how I currently think about the use of LLMs to aid software development. I hope at least some of the ideas here are new, and if not I shed them in a newer light; failing _that_, that they are at least organised in a better way. It is not about my setup or my "workflow" as (a) that is heavily user-dependent, (b) it is probably going to go stale in a month, and (c) I don't like the word "workflow." This is about some common (anti-)patterns that I've encountered when trying to make matrix multipliers do my job faster for me.
 
 My stance on this topic is not too controversial, I hope: I think that LLM tools like Claude and Codex represent a significant shift in how we work and how fast we can get work done. They're good enough to do rote wiring tasks (and be trusted to get it right), bounce ideas off of, and make throaway visualisations. On the other hand, I do not think them good enough to make fine-grained software decisions or design systems intended to be maintained for any meaningful timeframe. Though automation is the name of the game, I think it is just as wrong to delegate everything to LLMs (though it is certainly a goal to strive towards) as these agents are hardly a replacement for proper human thought as it is to adopt a Luddite stance and refuse to use LLMs in writing code in a professional setting.
 
